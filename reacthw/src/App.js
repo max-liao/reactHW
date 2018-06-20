@@ -14,20 +14,7 @@ class App extends Component {
   score = 0;
   navScore = `Score: ${this.score} | Top Score: ${this.highscore}`;
 
-  componentDidMount() {
-    this.timerID = setInterval(
-      // () => this.tick(),
-      1000
-    );
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
   click = id => {
-    // console.log(this);
-    // console.log(id);
     var found = false;
     for (let i=0; i<this.clickedarray.length; i++){
       if (this.clickedarray[i]===id){
@@ -46,19 +33,29 @@ class App extends Component {
       this.score = 0;
       this.clickedarray = [];
       this.navMessage = "Miss! Starting Over";
+      this.shuffleArray(friends);
     } 
     this.navScore = `Score: ${this.score} | Top Score: ${this.highscore}`;
-    // console.log(found);
     console.log(this.navScore);
     console.log("array: " + this.clickedarray);
+    this.shuffleArray(friends);
     this.setState({});
-    // return (<Nav key = "Nav" navMessage = {this.navMessage} navScore = {this.navScore}/>);
+  }
+
+  shuffleArray(array){
+    let i = array.length - 1;
+    for (; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return (array);
   }
 
   render() {
     return (
     <Wrapper>
-        {/* {<Nav key = "Nav" score = {this.score} highscore = {this.highscore} navscore = {this.navScore}/>} */}
         {<Nav key = "Nav" navMessage = {this.navMessage} navScore = {this.navScore}/>}
         <h1 className="title">Friends List</h1>
         {
